@@ -10,9 +10,9 @@ public class Main {
 
         List<Thread> threads = new ArrayList<>();
 
-        long startTs = System.currentTimeMillis(); // start time
         for (String text : texts) {
             Thread thread = new Thread(() -> {
+                long startTs = System.currentTimeMillis();
                 int maxSize = 0;
                 for (int i = 0; i < text.length(); i++) {
                     for (int j = 0; j < text.length(); j++) {
@@ -32,6 +32,8 @@ public class Main {
                     }
                 }
                 System.out.println(text.substring(0, 100) + " -> " + maxSize);
+                long endTs = System.currentTimeMillis();
+                System.out.println("Time: " + (endTs - startTs) + "ms");
             });
             threads.add(thread);
             thread.start();
@@ -40,9 +42,6 @@ public class Main {
         for (Thread thread : threads) {
             thread.join();
         }
-
-        long endTs = System.currentTimeMillis(); // end time
-        System.out.println("Time: " + (endTs - startTs) + "ms");
     }
 
     public static String generateText(String letters, int length) {
